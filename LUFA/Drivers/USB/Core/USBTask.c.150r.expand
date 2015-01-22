@@ -1,0 +1,123 @@
+
+;; Function USB_USBTask (USB_USBTask, funcdef_no=84, decl_uid=2534, cgraph_uid=84)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+;; Generating RTL for gimple basic block 5
+
+;; Generating RTL for gimple basic block 6
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 3 NOTE_INSN_DELETED)
+
+(note 3 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(note 2 3 4 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 4 2 5 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(insn 5 4 6 3 (set (reg:QI 42 [ USB_DeviceState.0 ])
+        (mem/v/c:QI (symbol_ref:HI ("USB_DeviceState")  <var_decl 0x40770240 USB_DeviceState>) [0 USB_DeviceState+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:65 -1
+     (nil))
+
+(insn 6 5 7 3 (set (cc0)
+        (compare (reg:QI 42 [ USB_DeviceState.0 ])
+            (const_int 0 [0]))) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:65 -1
+     (nil))
+
+(jump_insn 7 6 8 3 (set (pc)
+        (if_then_else (eq (cc0)
+                (const_int 0 [0]))
+            (label_ref 25)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:65 -1
+     (expr_list:REG_BR_PROB (const_int 3900 [0xf3c])
+        (nil))
+ -> 25)
+
+(note 8 7 9 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 9 8 10 4 (set (reg/f:HI 47)
+        (const_int 233 [0xe9])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:311 -1
+     (nil))
+
+(insn 10 9 11 4 (set (reg:QI 43 [ D.2590 ])
+        (mem/v:QI (reg/f:HI 47) [0 MEM[(volatile uint8_t *)233B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:311 -1
+     (nil))
+
+(insn 11 10 12 4 (set (reg/v:QI 44 [ PrevEndpoint ])
+        (and:QI (reg:QI 43 [ D.2590 ])
+            (const_int 15 [0xf]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:311 -1
+     (nil))
+
+(insn 12 11 13 4 (set (reg/f:HI 48)
+        (const_int 233 [0xe9])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:330 -1
+     (nil))
+
+(insn 13 12 14 4 (set (mem/v:QI (reg/f:HI 48) [0 MEM[(volatile uint8_t *)233B]+0 S1 A8])
+        (const_int 0 [0])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:330 -1
+     (nil))
+
+(insn 14 13 15 4 (set (reg/f:HI 49)
+        (const_int 232 [0xe8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:491 -1
+     (nil))
+
+(insn 15 14 16 4 (set (reg:QI 45 [ D.2588 ])
+        (mem/v:QI (reg/f:HI 49) [0 MEM[(volatile uint8_t *)232B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:491 -1
+     (nil))
+
+(insn 16 15 17 4 (set (reg:QI 50)
+        (and:QI (reg:QI 45 [ D.2588 ])
+            (const_int 8 [0x8]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:491 -1
+     (nil))
+
+(insn 17 16 18 4 (set (cc0)
+        (compare (reg:QI 50)
+            (const_int 0 [0]))) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:71 -1
+     (nil))
+
+(jump_insn 18 17 19 4 (set (pc)
+        (if_then_else (eq (cc0)
+                (const_int 0 [0]))
+            (label_ref 21)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:71 -1
+     (expr_list:REG_BR_PROB (const_int 7100 [0x1bbc])
+        (nil))
+ -> 21)
+
+(note 19 18 20 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(call_insn 20 19 21 5 (parallel [
+            (call (mem:HI (symbol_ref:HI ("USB_Device_ProcessControlRequest") [flags 0x41]  <function_decl 0x4075e280 USB_Device_ProcessControlRequest>) [0 USB_Device_ProcessControlRequest S2 A8])
+                (const_int 0 [0]))
+            (use (const_int 0 [0]))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/USBTask.c:72 -1
+     (nil)
+    (nil))
+
+(code_label 21 20 22 6 3 "" [1 uses])
+
+(note 22 21 23 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 23 22 24 6 (set (reg/f:HI 51)
+        (const_int 233 [0xe9])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:330 -1
+     (nil))
+
+(insn 24 23 25 6 (set (mem/v:QI (reg/f:HI 51) [0 MEM[(volatile uint8_t *)233B]+0 S1 A8])
+        (reg/v:QI 44 [ PrevEndpoint ])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/Endpoint_AVR8.h:330 -1
+     (nil))
+
+(code_label 25 24 26 7 2 "" [1 uses])
+
+(note 26 25 27 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(code_label 27 26 28 8 1 "" [0 uses])
+
+(note 28 27 0 8 [bb 8] NOTE_INSN_BASIC_BLOCK)

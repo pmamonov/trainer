@@ -1,0 +1,161 @@
+
+;; Function USB_Device_SendRemoteWakeup (USB_Device_SendRemoteWakeup, funcdef_no=84, decl_uid=2484, cgraph_uid=84)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+;; Generating RTL for gimple basic block 5
+
+;; Generating RTL for gimple basic block 6
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 3 NOTE_INSN_DELETED)
+
+(note 3 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(note 2 3 4 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 4 2 5 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(insn 5 4 6 3 (set (reg/f:HI 50)
+        (const_int 73 [0x49])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:335 -1
+     (nil))
+
+(insn 6 5 7 3 (set (reg:QI 51)
+        (const_int 12 [0xc])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:335 -1
+     (nil))
+
+(insn 7 6 8 3 (set (mem/v:QI (reg/f:HI 50) [0 MEM[(volatile uint8_t *)73B]+0 S1 A8])
+        (reg:QI 51)) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:335 -1
+     (nil))
+
+(insn 8 7 9 3 (set (reg/f:HI 52)
+        (const_int 73 [0x49])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:336 -1
+     (nil))
+
+(insn 9 8 10 3 (set (reg:QI 53)
+        (const_int 14 [0xe])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:336 -1
+     (nil))
+
+(insn 10 9 14 3 (set (mem/v:QI (reg/f:HI 52) [0 MEM[(volatile uint8_t *)73B]+0 S1 A8])
+        (reg:QI 53)) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:336 -1
+     (nil))
+
+(code_label 14 10 11 4 2 "" [1 uses])
+
+(note 11 14 12 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 12 11 13 4 (set (reg/f:HI 54)
+        (const_int 73 [0x49])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:348 -1
+     (nil))
+
+(insn 13 12 15 4 (set (reg:QI 46 [ D.2577 ])
+        (mem/v:QI (reg/f:HI 54) [0 MEM[(volatile uint8_t *)73B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:348 -1
+     (nil))
+
+(insn 15 13 16 4 (set (reg:QI 55)
+        (and:QI (reg:QI 46 [ D.2577 ])
+            (const_int 1 [0x1]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:348 -1
+     (nil))
+
+(insn 16 15 17 4 (set (cc0)
+        (compare (reg:QI 55)
+            (const_int 0 [0]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:43 -1
+     (nil))
+
+(jump_insn 17 16 18 4 (set (pc)
+        (if_then_else (eq (cc0)
+                (const_int 0 [0]))
+            (label_ref 14)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:43 -1
+     (expr_list:REG_BR_PROB (const_int 9100 [0x238c])
+        (nil))
+ -> 14)
+
+(note 18 17 19 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(insn 19 18 20 5 (set (reg/f:HI 56)
+        (const_int 216 [0xd8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:394 -1
+     (nil))
+
+(insn 20 19 21 5 (set (reg:QI 48 [ D.2580 ])
+        (mem/v:QI (reg/f:HI 56) [0 MEM[(volatile uint8_t *)216B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:394 -1
+     (nil))
+
+(insn 21 20 22 5 (set (reg:QI 49 [ D.2579 ])
+        (and:QI (reg:QI 48 [ D.2580 ])
+            (const_int -33 [0xffffffdf]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:394 -1
+     (nil))
+
+(insn 22 21 23 5 (set (reg/f:HI 57)
+        (const_int 216 [0xd8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:394 -1
+     (nil))
+
+(insn 23 22 24 5 (set (mem/v:QI (reg/f:HI 57) [0 MEM[(volatile uint8_t *)216B]+0 S1 A8])
+        (reg:QI 49 [ D.2579 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/../AVR8/../AVR8/USBController_AVR8.h:394 -1
+     (nil))
+
+(insn 24 23 25 5 (set (reg/f:HI 58)
+        (const_int 224 [0xe0])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:48 -1
+     (nil))
+
+(insn 25 24 26 5 (set (reg:QI 43 [ D.2550 ])
+        (mem/v:QI (reg/f:HI 58) [0 MEM[(volatile uint8_t *)224B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:48 -1
+     (nil))
+
+(insn 26 25 27 5 (set (reg:QI 44 [ D.2551 ])
+        (ior:QI (reg:QI 43 [ D.2550 ])
+            (const_int 2 [0x2]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:48 -1
+     (nil))
+
+(insn 27 26 28 5 (set (reg/f:HI 59)
+        (const_int 224 [0xe0])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:48 -1
+     (nil))
+
+(insn 28 27 32 5 (set (mem/v:QI (reg/f:HI 59) [0 MEM[(volatile uint8_t *)224B]+0 S1 A8])
+        (reg:QI 44 [ D.2551 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:48 -1
+     (nil))
+
+(code_label 32 28 29 6 3 "" [1 uses])
+
+(note 29 32 30 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 30 29 31 6 (set (reg/f:HI 60)
+        (const_int 224 [0xe0])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:49 -1
+     (nil))
+
+(insn 31 30 33 6 (set (reg:QI 45 [ D.2552 ])
+        (mem/v:QI (reg/f:HI 60) [0 MEM[(volatile uint8_t *)224B]+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:49 -1
+     (nil))
+
+(insn 33 31 34 6 (set (reg:QI 61)
+        (and:QI (reg:QI 45 [ D.2552 ])
+            (const_int 2 [0x2]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:49 -1
+     (nil))
+
+(insn 34 33 35 6 (set (cc0)
+        (compare (reg:QI 61)
+            (const_int 0 [0]))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:49 -1
+     (nil))
+
+(jump_insn 35 34 36 6 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 32)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/AVR8/Device_AVR8.c:49 -1
+     (expr_list:REG_BR_PROB (const_int 9100 [0x238c])
+        (nil))
+ -> 32)
+
+(note 36 35 37 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(code_label 37 36 38 8 1 "" [0 uses])
+
+(note 38 37 0 8 [bb 8] NOTE_INSN_BASIC_BLOCK)

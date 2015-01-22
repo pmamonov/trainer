@@ -1,0 +1,771 @@
+
+;; Function USB_GetNextDescriptorOfType (USB_GetNextDescriptorOfType, funcdef_no=87, decl_uid=2607, cgraph_uid=87)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+;; Generating RTL for gimple basic block 5
+Predictions for insn 16 bb 3
+  no prediction heuristics: 50.0%
+  combined heuristics: 50.0%
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 6 NOTE_INSN_DELETED)
+
+(note 6 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(insn 2 6 3 2 (set (reg/v/f:HI 52 [ BytesRem ])
+        (reg:HI 24 r24 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:77 -1
+     (nil))
+
+(insn 3 2 4 2 (set (reg/v/f:HI 53 [ CurrConfigLoc ])
+        (reg:HI 22 r22 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:77 -1
+     (nil))
+
+(insn 4 3 5 2 (set (reg/v:QI 54 [ Type ])
+        (reg:QI 20 r20 [ Type ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:77 -1
+     (nil))
+
+(note 5 4 7 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 7 5 8 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 8 7 9 3 (set (pc)
+        (label_ref 29)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:78 -1
+     (nil)
+ -> 29)
+
+(barrier 9 8 32)
+
+(code_label 32 9 10 4 4 "" [1 uses])
+
+(note 10 32 11 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 11 10 12 4 (set (reg/f:HI 44 [ D.2718 ])
+        (mem/f:HI (reg/v/f:HI 53 [ CurrConfigLoc ]) [2 *CurrConfigLoc_3(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 12 11 13 4 (set (reg:QI 55)
+        (mem:QI (reg/f:HI 44 [ D.2718 ]) [0 MEM[(struct USB_Descriptor_Header_t *)D.2718_11].Size+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 13 12 14 4 (set (reg/v:HI 46 [ CurrDescriptorSize ])
+        (zero_extend:HI (reg:QI 55))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 14 13 15 4 (set (reg/v:HI 47 [ CurrDescriptorSize ])
+        (reg:HI 42 [ D.2697 ])) -1
+     (nil))
+
+(insn 15 14 16 4 (parallel [
+            (set (cc0)
+                (compare (reg/v:HI 47 [ CurrDescriptorSize ])
+                    (reg/v:HI 46 [ CurrDescriptorSize ])))
+            (clobber (scratch:QI))
+        ]) -1
+     (nil))
+
+(jump_insn 16 15 41 4 (set (pc)
+        (if_then_else (leu (cc0)
+                (const_int 0 [0]))
+            (label_ref 18)
+            (pc))) -1
+     (expr_list:REG_BR_PROB (const_int 5000 [0x1388])
+        (nil))
+ -> 18)
+
+(note 41 16 17 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(insn 17 41 18 5 (set (reg/v:HI 47 [ CurrDescriptorSize ])
+        (reg/v:HI 46 [ CurrDescriptorSize ])) -1
+     (nil))
+
+(code_label 18 17 42 6 3 "" [1 uses])
+
+(note 42 18 19 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 19 42 20 6 (set (reg/f:HI 50 [ D.2713 ])
+        (plus:HI (reg/f:HI 44 [ D.2718 ])
+            (reg/v:HI 47 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 20 19 21 6 (set (mem/f:HI (reg/v/f:HI 53 [ CurrConfigLoc ]) [2 *CurrConfigLoc_3(D)+0 S2 A8])
+        (reg/f:HI 50 [ D.2713 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 21 20 22 6 (set (reg:HI 56)
+        (minus:HI (reg:HI 42 [ D.2697 ])
+            (reg/v:HI 47 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 22 21 23 6 (set (mem:HI (reg/v/f:HI 52 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])
+        (reg:HI 56)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 23 22 24 6 (set (reg:QI 57)
+        (mem:QI (plus:HI (reg/f:HI 50 [ D.2713 ])
+                (const_int 1 [0x1])) [0 MEM[(struct USB_Descriptor_Header_t *)D.2713_18].Type+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:82 -1
+     (nil))
+
+(insn 24 23 25 6 (set (cc0)
+        (compare (reg:QI 57)
+            (reg/v:QI 54 [ Type ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:82 -1
+     (nil))
+
+(jump_insn 25 24 35 6 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 29)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:82 -1
+     (expr_list:REG_BR_PROB (const_int 9550 [0x254e])
+        (nil))
+ -> 29)
+
+(code_label 35 25 26 7 5 "" [1 uses])
+
+(note 26 35 27 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 27 26 28 7 (set (pc)
+        (label_ref 39)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:83 -1
+     (nil)
+ -> 39)
+
+(barrier 28 27 29)
+
+(code_label 29 28 30 8 2 "" [2 uses])
+
+(note 30 29 31 8 [bb 8] NOTE_INSN_BASIC_BLOCK)
+
+(insn 31 30 33 8 (set (reg:HI 42 [ D.2697 ])
+        (mem:HI (reg/v/f:HI 52 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:78 -1
+     (nil))
+
+(insn 33 31 34 8 (parallel [
+            (set (cc0)
+                (compare (reg:HI 42 [ D.2697 ])
+                    (const_int 0 [0])))
+            (clobber (scratch:QI))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:78 -1
+     (nil))
+
+(jump_insn 34 33 38 8 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 32)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:78 -1
+     (expr_list:REG_BR_PROB (const_int 9550 [0x254e])
+        (nil))
+ -> 32)
+
+(note 38 34 36 9 [bb 9] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 36 38 37 9 (set (pc)
+        (label_ref 35)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:78 -1
+     (nil)
+ -> 35)
+
+(barrier 37 36 39)
+
+(code_label 39 37 40 10 1 "" [1 uses])
+
+(note 40 39 0 10 [bb 10] NOTE_INSN_BASIC_BLOCK)
+
+;; Function USB_GetNextDescriptorOfTypeBefore (USB_GetNextDescriptorOfTypeBefore, funcdef_no=88, decl_uid=2612, cgraph_uid=88)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+;; Generating RTL for gimple basic block 5
+
+;; Generating RTL for gimple basic block 6
+
+;; Generating RTL for gimple basic block 7
+
+;; Generating RTL for gimple basic block 8
+Predictions for insn 17 bb 3
+  no prediction heuristics: 50.0%
+  combined heuristics: 50.0%
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 7 NOTE_INSN_DELETED)
+
+(note 7 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(insn 2 7 3 2 (set (reg/v/f:HI 52 [ BytesRem ])
+        (reg:HI 24 r24 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:91 -1
+     (nil))
+
+(insn 3 2 4 2 (set (reg/v/f:HI 53 [ CurrConfigLoc ])
+        (reg:HI 22 r22 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:91 -1
+     (nil))
+
+(insn 4 3 5 2 (set (reg/v:QI 54 [ Type ])
+        (reg:QI 20 r20 [ Type ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:91 -1
+     (nil))
+
+(insn 5 4 6 2 (set (reg/v:QI 55 [ BeforeType ])
+        (reg:QI 18 r18 [ BeforeType ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:91 -1
+     (nil))
+
+(note 6 5 8 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 8 6 9 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 9 8 10 3 (set (pc)
+        (label_ref 38)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:92 -1
+     (nil)
+ -> 38)
+
+(barrier 10 9 41)
+
+(code_label 41 10 11 4 12 "" [1 uses])
+
+(note 11 41 12 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 12 11 13 4 (set (reg/f:HI 44 [ D.2731 ])
+        (mem/f:HI (reg/v/f:HI 53 [ CurrConfigLoc ]) [2 *CurrConfigLoc_3(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 13 12 14 4 (set (reg:QI 56)
+        (mem:QI (reg/f:HI 44 [ D.2731 ]) [0 MEM[(struct USB_Descriptor_Header_t *)D.2731_15].Size+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 14 13 15 4 (set (reg/v:HI 46 [ CurrDescriptorSize ])
+        (zero_extend:HI (reg:QI 56))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 15 14 16 4 (set (reg/v:HI 47 [ CurrDescriptorSize ])
+        (reg:HI 42 [ D.2691 ])) -1
+     (nil))
+
+(insn 16 15 17 4 (parallel [
+            (set (cc0)
+                (compare (reg/v:HI 47 [ CurrDescriptorSize ])
+                    (reg/v:HI 46 [ CurrDescriptorSize ])))
+            (clobber (scratch:QI))
+        ]) -1
+     (nil))
+
+(jump_insn 17 16 52 4 (set (pc)
+        (if_then_else (leu (cc0)
+                (const_int 0 [0]))
+            (label_ref 19)
+            (pc))) -1
+     (expr_list:REG_BR_PROB (const_int 5000 [0x1388])
+        (nil))
+ -> 19)
+
+(note 52 17 18 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(insn 18 52 19 5 (set (reg/v:HI 47 [ CurrDescriptorSize ])
+        (reg/v:HI 46 [ CurrDescriptorSize ])) -1
+     (nil))
+
+(code_label 19 18 53 6 9 "" [1 uses])
+
+(note 53 19 20 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 20 53 21 6 (set (reg/f:HI 50 [ D.2726 ])
+        (plus:HI (reg/f:HI 44 [ D.2731 ])
+            (reg/v:HI 47 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 21 20 22 6 (set (mem/f:HI (reg/v/f:HI 53 [ CurrConfigLoc ]) [2 *CurrConfigLoc_3(D)+0 S2 A8])
+        (reg/f:HI 50 [ D.2726 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 22 21 23 6 (set (reg:HI 57)
+        (minus:HI (reg:HI 42 [ D.2691 ])
+            (reg/v:HI 47 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 23 22 24 6 (set (mem:HI (reg/v/f:HI 52 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])
+        (reg:HI 57)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 24 23 25 6 (set (reg:QI 43 [ D.2686 ])
+        (mem:QI (plus:HI (reg/f:HI 50 [ D.2726 ])
+                (const_int 1 [0x1])) [0 MEM[(struct USB_Descriptor_Header_t *)D.2726_22].Type+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:96 -1
+     (nil))
+
+(insn 25 24 26 6 (set (cc0)
+        (compare (reg:QI 43 [ D.2686 ])
+            (reg/v:QI 54 [ Type ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:96 -1
+     (nil))
+
+(jump_insn 26 25 44 6 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 30)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:96 -1
+     (expr_list:REG_BR_PROB (const_int 9700 [0x25e4])
+        (nil))
+ -> 30)
+
+(code_label 44 26 27 7 13 "" [1 uses])
+
+(note 27 44 28 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 28 27 29 7 (set (pc)
+        (label_ref 48)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:96 -1
+     (nil)
+ -> 48)
+
+(barrier 29 28 30)
+
+(code_label 30 29 31 8 10 "" [1 uses])
+
+(note 31 30 32 8 [bb 8] NOTE_INSN_BASIC_BLOCK)
+
+(insn 32 31 33 8 (set (cc0)
+        (compare (reg:QI 43 [ D.2686 ])
+            (reg/v:QI 55 [ BeforeType ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:100 -1
+     (nil))
+
+(jump_insn 33 32 34 8 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 38)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:100 -1
+     (expr_list:REG_BR_PROB (const_int 9700 [0x25e4])
+        (nil))
+ -> 38)
+
+(note 34 33 35 9 [bb 9] NOTE_INSN_BASIC_BLOCK)
+
+(insn 35 34 36 9 (set (mem:HI (reg/v/f:HI 52 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])
+        (const_int 0 [0])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:102 -1
+     (nil))
+
+(jump_insn 36 35 37 9 (set (pc)
+        (label_ref 48)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:103 -1
+     (nil)
+ -> 48)
+
+(barrier 37 36 38)
+
+(code_label 38 37 39 10 8 "" [2 uses])
+
+(note 39 38 40 10 [bb 10] NOTE_INSN_BASIC_BLOCK)
+
+(insn 40 39 42 10 (set (reg:HI 42 [ D.2691 ])
+        (mem:HI (reg/v/f:HI 52 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:92 -1
+     (nil))
+
+(insn 42 40 43 10 (parallel [
+            (set (cc0)
+                (compare (reg:HI 42 [ D.2691 ])
+                    (const_int 0 [0])))
+            (clobber (scratch:QI))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:92 -1
+     (nil))
+
+(jump_insn 43 42 47 10 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 41)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:92 -1
+     (expr_list:REG_BR_PROB (const_int 9700 [0x25e4])
+        (nil))
+ -> 41)
+
+(note 47 43 45 11 [bb 11] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 45 47 46 11 (set (pc)
+        (label_ref 44)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:92 -1
+     (nil)
+ -> 44)
+
+(barrier 46 45 48)
+
+(code_label 48 46 49 12 11 "" [2 uses])
+
+(note 49 48 50 12 [bb 12] NOTE_INSN_BASIC_BLOCK)
+
+(code_label 50 49 51 13 7 "" [0 uses])
+
+(note 51 50 0 13 [bb 13] NOTE_INSN_BASIC_BLOCK)
+
+;; Function USB_GetNextDescriptorOfTypeAfter (USB_GetNextDescriptorOfTypeAfter, funcdef_no=89, decl_uid=2617, cgraph_uid=89)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 7 NOTE_INSN_DELETED)
+
+(note 7 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(insn 2 7 3 2 (set (reg/v/f:HI 43 [ BytesRem ])
+        (reg:HI 24 r24 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:112 -1
+     (nil))
+
+(insn 3 2 4 2 (set (reg/v/f:HI 44 [ CurrConfigLoc ])
+        (reg:HI 22 r22 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:112 -1
+     (nil))
+
+(insn 4 3 5 2 (set (reg/v:QI 45 [ Type ])
+        (reg:QI 20 r20 [ Type ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:112 -1
+     (nil))
+
+(insn 5 4 6 2 (set (reg/v:QI 46 [ AfterType ])
+        (reg:QI 18 r18 [ AfterType ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:112 -1
+     (nil))
+
+(note 6 5 8 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 8 6 9 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(insn 9 8 10 3 (set (reg:QI 20 r20)
+        (reg/v:QI 46 [ AfterType ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:113 -1
+     (nil))
+
+(insn 10 9 11 3 (set (reg:HI 22 r22)
+        (reg/v/f:HI 44 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:113 -1
+     (nil))
+
+(insn 11 10 12 3 (set (reg:HI 24 r24)
+        (reg/v/f:HI 43 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:113 -1
+     (nil))
+
+(call_insn 12 11 13 3 (parallel [
+            (call (mem:HI (symbol_ref:HI ("USB_GetNextDescriptorOfType") [flags 0x3]  <function_decl 0x40773680 USB_GetNextDescriptorOfType>) [0 USB_GetNextDescriptorOfType S2 A8])
+                (const_int 0 [0]))
+            (use (const_int 0 [0]))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:113 -1
+     (expr_list:REG_EH_REGION (const_int 0 [0])
+        (nil))
+    (expr_list:REG_NONNEG (use (reg:HI 24 r24))
+        (expr_list:REG_NONNEG (use (reg:HI 22 r22))
+            (expr_list:REG_EQUAL (use (reg:QI 20 r20))
+                (nil)))))
+
+(insn 13 12 14 3 (set (reg:HI 47)
+        (mem:HI (reg/v/f:HI 43 [ BytesRem ]) [4 *BytesRem_1(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:115 -1
+     (nil))
+
+(insn 14 13 15 3 (parallel [
+            (set (cc0)
+                (compare (reg:HI 47)
+                    (const_int 0 [0])))
+            (clobber (scratch:QI))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:115 -1
+     (nil))
+
+(jump_insn 15 14 16 3 (set (pc)
+        (if_then_else (eq (cc0)
+                (const_int 0 [0]))
+            (label_ref 22)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:115 -1
+     (expr_list:REG_BR_PROB (const_int 6102 [0x17d6])
+        (nil))
+ -> 22)
+
+(note 16 15 17 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 17 16 18 4 (set (reg:QI 20 r20)
+        (reg/v:QI 45 [ Type ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:116 -1
+     (nil))
+
+(insn 18 17 19 4 (set (reg:HI 22 r22)
+        (reg/v/f:HI 44 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:116 -1
+     (nil))
+
+(insn 19 18 20 4 (set (reg:HI 24 r24)
+        (reg/v/f:HI 43 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:116 -1
+     (nil))
+
+(call_insn/j 20 19 21 4 (parallel [
+            (call (mem:HI (symbol_ref:HI ("USB_GetNextDescriptorOfType") [flags 0x3]  <function_decl 0x40773680 USB_GetNextDescriptorOfType>) [0 USB_GetNextDescriptorOfType S2 A8])
+                (const_int 0 [0]))
+            (use (const_int 1 [0x1]))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:116 -1
+     (expr_list:REG_EH_REGION (const_int 0 [0])
+        (nil))
+    (expr_list:REG_NONNEG (use (reg:HI 24 r24))
+        (expr_list:REG_NONNEG (use (reg:HI 22 r22))
+            (expr_list:REG_EQUAL (use (reg:QI 20 r20))
+                (nil)))))
+
+(barrier 21 20 22)
+
+(code_label 22 21 23 5 16 "" [1 uses])
+
+(note 23 22 24 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(code_label 24 23 25 6 15 "" [0 uses])
+
+(note 25 24 0 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+;; Function USB_GetNextDescriptorComp (USB_GetNextDescriptorComp, funcdef_no=90, decl_uid=2621, cgraph_uid=90)
+
+
+;; Generating RTL for gimple basic block 2
+
+;; Generating RTL for gimple basic block 3
+
+;; Generating RTL for gimple basic block 4
+
+;; Generating RTL for gimple basic block 5
+
+;; Generating RTL for gimple basic block 6
+
+;; Generating RTL for gimple basic block 7
+Predictions for insn 19 bb 3
+  no prediction heuristics: 50.0%
+  combined heuristics: 50.0%
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 9 NOTE_INSN_DELETED)
+
+(note 9 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+
+(insn 2 9 3 2 (set (reg/v/f:HI 54 [ BytesRem ])
+        (reg:HI 24 r24 [ BytesRem ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:122 -1
+     (nil))
+
+(insn 3 2 4 2 (set (reg/v/f:HI 55 [ CurrConfigLoc ])
+        (reg:HI 22 r22 [ CurrConfigLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:122 -1
+     (nil))
+
+(insn 4 3 5 2 (set (reg/v/f:HI 56 [ ComparatorRoutine ])
+        (reg:HI 20 r20 [ ComparatorRoutine ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:122 -1
+     (nil))
+
+(note 5 4 10 2 NOTE_INSN_FUNCTION_BEG)
+
+(note 10 5 11 3 [bb 3] NOTE_INSN_BASIC_BLOCK)
+
+(jump_insn 11 10 12 3 (set (pc)
+        (label_ref 39)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:125 -1
+     (nil)
+ -> 39)
+
+(barrier 12 11 42)
+
+(code_label 42 12 13 4 21 "" [1 uses])
+
+(note 13 42 14 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+
+(insn 14 13 15 4 (set (reg/v/f:HI 44 [ PrevDescLoc ])
+        (mem/f:HI (reg/v/f:HI 55 [ CurrConfigLoc ]) [2 *CurrConfigLoc_4(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:127 -1
+     (nil))
+
+(insn 15 14 16 4 (set (reg:QI 57)
+        (mem:QI (reg/v/f:HI 44 [ PrevDescLoc ]) [0 MEM[(struct USB_Descriptor_Header_t *)PrevDescLoc_5].Size+0 S1 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 16 15 17 4 (set (reg/v:HI 47 [ CurrDescriptorSize ])
+        (zero_extend:HI (reg:QI 57))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:268 -1
+     (nil))
+
+(insn 17 16 18 4 (set (reg/v:HI 45 [ CurrDescriptorSize ])
+        (reg:HI 43 [ D.2671 ])) -1
+     (nil))
+
+(insn 18 17 19 4 (parallel [
+            (set (cc0)
+                (compare (reg/v:HI 45 [ CurrDescriptorSize ])
+                    (reg/v:HI 47 [ CurrDescriptorSize ])))
+            (clobber (scratch:QI))
+        ]) -1
+     (nil))
+
+(jump_insn 19 18 57 4 (set (pc)
+        (if_then_else (leu (cc0)
+                (const_int 0 [0]))
+            (label_ref 21)
+            (pc))) -1
+     (expr_list:REG_BR_PROB (const_int 5000 [0x1388])
+        (nil))
+ -> 21)
+
+(note 57 19 20 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+
+(insn 20 57 21 5 (set (reg/v:HI 45 [ CurrDescriptorSize ])
+        (reg/v:HI 47 [ CurrDescriptorSize ])) -1
+     (nil))
+
+(code_label 21 20 58 6 19 "" [1 uses])
+
+(note 58 21 22 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+
+(insn 22 58 23 6 (set (reg/f:HI 51 [ D.2740 ])
+        (plus:HI (reg/v/f:HI 44 [ PrevDescLoc ])
+            (reg/v:HI 45 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 23 22 24 6 (set (mem/f:HI (reg/v/f:HI 55 [ CurrConfigLoc ]) [2 *CurrConfigLoc_4(D)+0 S2 A8])
+        (reg/f:HI 51 [ D.2740 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:273 -1
+     (nil))
+
+(insn 24 23 25 6 (set (reg:HI 58)
+        (minus:HI (reg:HI 43 [ D.2671 ])
+            (reg/v:HI 45 [ CurrDescriptorSize ]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 25 24 26 6 (set (mem:HI (reg/v/f:HI 54 [ BytesRem ]) [4 *BytesRem_2(D)+0 S2 A8])
+        (reg:HI 58)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.h:274 -1
+     (nil))
+
+(insn 26 25 27 6 (set (reg:HI 24 r24)
+        (reg/f:HI 51 [ D.2740 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (nil))
+
+(call_insn 27 26 28 6 (parallel [
+            (set (reg:QI 24 r24)
+                (call (mem:HI (reg/v/f:HI 56 [ ComparatorRoutine ]) [0 *(uint8_t (*<T640>) (void *)) ComparatorRoutine_8(D) S2 A8])
+                    (const_int 0 [0])))
+            (use (const_int 0 [0]))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (nil)
+    (expr_list:REG_NONNEG (use (reg:HI 24 r24))
+        (nil)))
+
+(insn 28 27 29 6 (set (reg/v:QI 42 [ ErrorCode ])
+        (reg:QI 24 r24)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (nil))
+
+(insn 29 28 30 6 (set (cc0)
+        (compare (reg/v:QI 42 [ ErrorCode ])
+            (const_int 2 [0x2]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (nil))
+
+(jump_insn 30 29 31 6 (set (pc)
+        (if_then_else (eq (cc0)
+                (const_int 0 [0]))
+            (label_ref 39)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (expr_list:REG_BR_PROB (const_int 8600 [0x2198])
+        (nil))
+ -> 39)
+
+(note 31 30 6 7 [bb 7] NOTE_INSN_BASIC_BLOCK)
+
+(insn 6 31 32 7 (set (reg/v:QI 48 [ ErrorCode ])
+        (reg/v:QI 42 [ ErrorCode ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:132 -1
+     (nil))
+
+(insn 32 6 33 7 (set (cc0)
+        (compare (reg/v:QI 48 [ ErrorCode ])
+            (const_int 1 [0x1]))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:134 -1
+     (nil))
+
+(jump_insn 33 32 34 7 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 45)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:134 -1
+     (expr_list:REG_BR_PROB (const_int 6218 [0x184a])
+        (nil))
+ -> 45)
+
+(note 34 33 35 8 [bb 8] NOTE_INSN_BASIC_BLOCK)
+
+(insn 35 34 36 8 (set (mem/f:HI (reg/v/f:HI 55 [ CurrConfigLoc ]) [2 *CurrConfigLoc_4(D)+0 S2 A8])
+        (reg/v/f:HI 44 [ PrevDescLoc ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:136 -1
+     (nil))
+
+(insn 36 35 7 8 (set (mem:HI (reg/v/f:HI 54 [ BytesRem ]) [4 *BytesRem_2(D)+0 S2 A8])
+        (reg:HI 43 [ D.2671 ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:137 -1
+     (nil))
+
+(insn 7 36 37 8 (set (reg/v:QI 42 [ ErrorCode ])
+        (reg/v:QI 48 [ ErrorCode ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:137 -1
+     (nil))
+
+(jump_insn 37 7 38 8 (set (pc)
+        (label_ref 45)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:137 -1
+     (nil)
+ -> 45)
+
+(barrier 38 37 39)
+
+(code_label 39 38 40 9 18 "" [2 uses])
+
+(note 40 39 41 9 [bb 9] NOTE_INSN_BASIC_BLOCK)
+
+(insn 41 40 43 9 (set (reg:HI 43 [ D.2671 ])
+        (mem:HI (reg/v/f:HI 54 [ BytesRem ]) [4 *BytesRem_2(D)+0 S2 A8])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:125 -1
+     (nil))
+
+(insn 43 41 44 9 (parallel [
+            (set (cc0)
+                (compare (reg:HI 43 [ D.2671 ])
+                    (const_int 0 [0])))
+            (clobber (scratch:QI))
+        ]) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:125 -1
+     (nil))
+
+(jump_insn 44 43 56 9 (set (pc)
+        (if_then_else (ne (cc0)
+                (const_int 0 [0]))
+            (label_ref 42)
+            (pc))) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:125 -1
+     (expr_list:REG_BR_PROB (const_int 9550 [0x254e])
+        (nil))
+ -> 42)
+
+(note 56 44 8 10 [bb 10] NOTE_INSN_BASIC_BLOCK)
+
+(insn 8 56 45 10 (set (reg/v:QI 42 [ ErrorCode ])
+        (const_int 2 [0x2])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:144 -1
+     (nil))
+
+(code_label 45 8 46 11 20 "" [2 uses])
+
+(note 46 45 47 11 [bb 11] NOTE_INSN_BASIC_BLOCK)
+
+(insn 47 46 48 11 (set (reg:QI 53 [ <retval> ])
+        (reg/v:QI 42 [ ErrorCode ])) -1
+     (nil))
+
+(jump_insn 48 47 49 11 (set (pc)
+        (label_ref 50)) -1
+     (nil)
+ -> 50)
+
+(barrier 49 48 55)
+
+(note 55 49 52 12 [bb 12] NOTE_INSN_BASIC_BLOCK)
+
+(insn 52 55 53 12 (clobber (reg/i:QI 24 r24)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:145 -1
+     (nil))
+
+(insn 53 52 50 12 (clobber (reg:QI 53 [ <retval> ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:145 -1
+     (nil))
+
+(code_label 50 53 59 13 17 "" [1 uses])
+
+(note 59 50 51 13 [bb 13] NOTE_INSN_BASIC_BLOCK)
+
+(insn 51 59 54 13 (set (reg/i:QI 24 r24)
+        (reg:QI 53 [ <retval> ])) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:145 -1
+     (nil))
+
+(insn 54 51 0 13 (use (reg/i:QI 24 r24)) ../LUFA-120219/LUFA/Drivers/USB/Core/ConfigDescriptor.c:145 -1
+     (nil))
