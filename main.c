@@ -1,153 +1,146 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "serial.h"
 
-#include "Descriptors.h"
-#include <LUFA/Version.h>
-#include <LUFA/Drivers/USB/USB.h>
+struct pcint_t {
+	uint8_t pcint;
+	uint8_t pcie;
+	volatile uint8_t *ddr;
+	volatile uint8_t *port;
+	volatile uint8_t *pin;
+	volatile uint8_t *pcmsk;
+	uint8_t pnum;
+	uint16_t timer;
+	uint16_t delay;
+	uint8_t flags;
+};
 
-inline void process_ovf(uint32_t *d, uint16_t *s){
-	if (*d<=0x7ffeffffUL){
-  	*d += 0x10000UL - *s;
-		*s = 0;
-	}
-}
+#define FLAG_INT	(1 << 0)
+#define FLAG_BIT_SET	(1 << 1)
 
-volatile uint32_t d1, D1;
-volatile uint16_t s1;
-volatile uint8_t r1;
+#define TIMER_MAX	((1ull << 16) - 1)
 
-ISR(TIMER3_OVF_vect){
-  process_ovf(&d1, &s1);
-}
+#define NUM_INT 3
 
-ISR(TIMER3_CAPT_vect){
-	uint16_t t;
-	t=ICR3;
-
-  if (TIFR3 & 1<<TOV3 && t==0){ // process pending OVF interrupt
-    process_ovf(&d1, &s1);
-    TIFR3 |= 1<<TOV3;
-  }
-
-	d1 += t - s1;
-	if (!r1) {D1=d1; r1=1;}
-	s1=t;	d1=0;
-}
-
-volatile uint32_t d0, D0;
-volatile uint16_t s0;
-volatile uint8_t r0;
-
-
-
-ISR(TIMER1_OVF_vect){
-  process_ovf(&d0, &s0);
-}
-
-ISR(TIMER1_CAPT_vect){
-	uint16_t t;
-	t=ICR1;
-
-  if (TIFR1 & 1<<TOV1 && t==0){ // process pending OVF interrupt
-    process_ovf(&d0, &s0);
-    TIFR1 |= 1<<TOV1;
-  }
-
-	d0 += t - s0;
-	if (!r0) {D0=d0; r0=1;}
-	s0=t;	d0=0;
-}
-
-void EVENT_USB_Device_Connect(void);
-void EVENT_USB_Device_Disconnect(void);
-void EVENT_USB_Device_ConfigurationChanged(void);
-void EVENT_USB_Device_ControlRequest(void);
-
-USB_ClassInfo_CDC_Device_t VirtualSerial_CDC_Interface =
+struct pcint_t pcint[NUM_INT] = {
 	{
-		.Config =
-			{
-				.ControlInterfaceNumber         = 0,
+		.pcint = PCINT4,
+		.pcie = PCIE0,
+		.pcmsk = &PCMSK0,
+		.ddr = &DDRB,
+		.port = &PORTB,
+		.pin = &PINB,
+		.pnum = 4,
+	},
+	{
+		.pcint = PCINT5,
+		.pcie = PCIE0,
+		.pcmsk = &PCMSK0,
+		.ddr = &DDRB,
+		.port = &PORTB,
+		.pin = &PINB,
+		.pnum = 5,
+	},
+	{
+		.pcint = PCINT6,
+		.pcie = PCIE0,
+		.pcmsk = &PCMSK0,
+		.ddr = &DDRB,
+		.port = &PORTB,
+		.pin = &PINB,
+		.pnum = 6,
+	},
+};
 
-				.DataINEndpointNumber           = CDC_TX_EPNUM,
-				.DataINEndpointSize             = CDC_TXRX_EPSIZE,
-				.DataINEndpointDoubleBank       = false,
+int main()
+{
+	int i;
+	uint16_t delay;
+	uint8_t temp;
 
-				.DataOUTEndpointNumber          = CDC_RX_EPNUM,
-				.DataOUTEndpointSize            = CDC_TXRX_EPSIZE,
-				.DataOUTEndpointDoubleBank      = false,
+	/* setup timer1 */
+	TCCR1B |= 1 << CS10;
+	TIMSK1 |= 1 << TOIE1;
 
-				.NotificationEndpointNumber     = CDC_NOTIFICATION_EPNUM,
-				.NotificationEndpointSize       = CDC_NOTIFICATION_EPSIZE,
-				.NotificationEndpointDoubleBank = false,
-			},
-	};
+	/* setup serial port */
+	serial_init();
 
+	/* setup external interrupts */
+	for (i = 0; i < NUM_INT; i++) {
+		*pcint[i].ddr &= ~(1 << pcint[i].pnum);
+		*pcint[i].port |= 1 << pcint[i].pnum;
 
-void main(){
-#if defined(__AVR_AT90USB1287__)
-  CLKPR=0x80;
-  CLKPR=0x00;
-#warning this is for AT90USB1287
-#endif
-
-	DDRC = ~(1<<7); PORTC |= 1<<7;
-	DDRD = ~(1<<4); PORTD |= 1<<4;
-
-	// Timer setup
-	TCCR1B |= 2<<CS10 | 1<<ICES1;
-	TIMSK1 |= 1<<TOIE1 | 1<<ICIE1;
-
-	TCCR3B |= 2<<CS30 | 1<<ICES3;
-	TIMSK3 |= 1<<TOIE3 | 1<<ICIE3;
-
-	// USB init	
-	USBCON &= ~(1 << OTGPADE); 
-  USB_Init();
+		PCICR |= (1 << pcint[i].pcie);
+		*pcint[i].pcmsk |= (1 << pcint[i].pcint);
+		pcint[i].timer = 0;
+		pcint[i].flags = 0;
+		if (*pcint[i].pin & (1 << pcint[i].pnum))
+			pcint[i].flags |= FLAG_BIT_SET;
+	}
 
 	sei();
 
 	while (1) {
-		if (r1){
-			CDC_Device_SendData(&VirtualSerial_CDC_Interface, "\r\n", 2);
-			D1 |= (uint32_t)1<<31;
-			CDC_Device_SendData(&VirtualSerial_CDC_Interface, &D1, sizeof(D1));
-		  CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-			r1=0;
-		}
-		if (r0){
-			CDC_Device_SendData(&VirtualSerial_CDC_Interface, "\r\n", 2);
-			CDC_Device_SendData(&VirtualSerial_CDC_Interface, &D0, sizeof(D0));
-		  CDC_Device_Flush(&VirtualSerial_CDC_Interface);
-			r0=0;
+		for (i = 0; i < NUM_INT; i++) {
+			temp = 0;
+			cli();
+			if (pcint[i].flags & FLAG_INT) {
+				temp = 1;
+				pcint[i].flags &= ~FLAG_INT;
+				delay = pcint[i].delay;
+			}
+			sei();
+
+			if (temp) {
+				temp = 0xaa;
+				serial_send((char *)&temp, 1);
+				temp = i;
+				serial_send((char *)&temp, 1);
+				serial_send((char *)&delay, 2);
+			}
 		}
 	}
 }
 
-
-
-/** Event handler for the library USB Connection event. */
-void EVENT_USB_Device_Connect(void)
+ISR(TIMER1_OVF_vect)
 {
+	int i;
+
+	TCNT1 = (1ull << 16) - F_CPU / 1000;
+	for (i = 0; i < NUM_INT; i++) {
+		if (pcint[i].timer < TIMER_MAX)
+			pcint[i].timer += 1;
+	}
 }
 
-/** Event handler for the library USB Disconnection event. */
-void EVENT_USB_Device_Disconnect(void)
+inline void pcint_isr()
 {
+	int i;
+
+	for (i = 0; i < NUM_INT; i++) {
+		if (*pcint[i].pin & (1 << pcint[i].pnum)) {
+			if (!(pcint[i].flags & FLAG_BIT_SET)) {
+				pcint[i].flags |= FLAG_INT;
+				pcint[i].flags |= FLAG_BIT_SET;
+				pcint[i].delay = pcint[i].timer;
+				pcint[i].timer = 0;
+			}
+		} else
+			pcint[i].flags &= ~FLAG_BIT_SET;
+	}
 }
 
-/** Event handler for the library USB Configuration Changed event. */
-void EVENT_USB_Device_ConfigurationChanged(void)
+ISR(PCINT0_vect)
 {
-	bool ConfigSuccess = true;
-
-	ConfigSuccess &= CDC_Device_ConfigureEndpoints(&VirtualSerial_CDC_Interface);
-
+	pcint_isr();
 }
 
-/** Event handler for the library USB Control Request reception event. */
-void EVENT_USB_Device_ControlRequest(void)
+ISR(PCINT1_vect)
 {
-	CDC_Device_ProcessControlRequest(&VirtualSerial_CDC_Interface);
+	pcint_isr();
 }
 
+ISR(PCINT2_vect)
+{
+	pcint_isr();
+}

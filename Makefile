@@ -1,22 +1,10 @@
-DEVICE  = atmega32u4
+DEVICE  = atmega2560
 F_CPU   = 16000000
 
-LUFA_PATH = .
-LUFA_OPTS  = -D USB_DEVICE_ONLY
-LUFA_OPTS += -D FIXED_CONTROL_ENDPOINT_SIZE=8
-LUFA_OPTS += -D FIXED_NUM_CONFIGURATIONS=1
-LUFA_OPTS += -D USE_FLASH_DESCRIPTORS
-LUFA_OPTS += -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)"
-LUFA_OPTS += -DINTERRUPT_CONTROL_ENDPOINT
-include $(LUFA_PATH)/LUFA/makefile
-LUFA_SRC = $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS)
-
 CC = avr-gcc
-CFLAGS =  -std=c99 -Wall -Os -mmcu=$(DEVICE) -DF_CPU=$(F_CPU)UL -I. \
--DF_USB=$(F_CPU)UL -I$(LUFA_PATH) $(LUFA_OPTS)
+CFLAGS = -std=c99 -Wall -Os -mmcu=$(DEVICE) -DF_CPU=$(F_CPU)ULL -I.
 
-OBJ=main.o\
- $(LUFA_SRC:%.c=./%.o) Descriptors.o
+OBJ = main.o serial.o
 
 main.hex: main.elf
 	rm -f main.hex
@@ -34,7 +22,7 @@ clean:
 	rm -f $(OBJ) main.elf main.hex main.bin
 
 load:
-	avrdude -c avr109 -P /dev/ttyACM0 -p m32u4 -b 57600 -U flash:w:main.hex:i
+	avrdude -c usbasp -p m2560 -U flash:w:main.hex:i
 #	$(batchisp) -hardware usb -device $(DEVICE) -operation erase f
 #	$(batchisp) -hardware usb -device $(DEVICE) -operation loadbuffer `pwd`/main.hex program
 #	$(batchisp) -hardware usb -device $(DEVICE) -operation start reset 0
@@ -43,3 +31,5 @@ load:
 #fuse:
 #	sudo avrdude -P usb -c usbasp -p m32 -U lfuse:w:lfuse.bin:r -U hfuse:w:hfuse.bin:r
 
+disablebootloader:
+	avrdude -c usbasp -p m2560 -U hfuse:w:0xd9:m
