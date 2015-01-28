@@ -54,51 +54,16 @@ struct pcint_t pcint[NUM_INT] = {
 
 int main()
 {
-	int i;
-	uint16_t delay;
-	uint8_t temp;
-
-	/* setup timer1 */
-	TCCR1B |= 1 << CS10;
-	TIMSK1 |= 1 << TOIE1;
+	char c;
 
 	/* setup serial port */
 	serial_init();
 
-	/* setup external interrupts */
-	for (i = 0; i < NUM_INT; i++) {
-		*pcint[i].ddr &= ~(1 << pcint[i].pnum);
-		*pcint[i].port |= 1 << pcint[i].pnum;
-
-		PCICR |= (1 << pcint[i].pcie);
-		*pcint[i].pcmsk |= (1 << pcint[i].pcint);
-		pcint[i].timer = 0;
-		pcint[i].flags = 0;
-		if (*pcint[i].pin & (1 << pcint[i].pnum))
-			pcint[i].flags |= FLAG_BIT_SET;
-	}
-
 	sei();
 
 	while (1) {
-		for (i = 0; i < NUM_INT; i++) {
-			temp = 0;
-			cli();
-			if (pcint[i].flags & FLAG_INT) {
-				temp = 1;
-				pcint[i].flags &= ~FLAG_INT;
-				delay = pcint[i].delay;
-			}
-			sei();
-
-			if (temp) {
-				temp = 0xaa;
-				serial_send((char *)&temp, 1);
-				temp = i;
-				serial_send((char *)&temp, 1);
-				serial_send((char *)&delay, 2);
-			}
-		}
+		serial_recv(&c, 1);
+		serial_send(&c, 1);
 	}
 }
 
