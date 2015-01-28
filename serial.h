@@ -7,4 +7,6 @@
 
 void serial_init(void);
 
-int serial_send(char *, int);
+int serial_send(const char *, int);
+
+int serial_recv(char *, int);
