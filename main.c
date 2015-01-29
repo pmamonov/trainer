@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "serial.h"
+#include "bt.h"
 
 struct pcint_t {
 	uint8_t pcint;
@@ -61,9 +62,14 @@ int main()
 
 	sei();
 
+	bt_init();
+	bt_connect();
+
 	while (1) {
 		serial_recv(0, &c, 1);
 		serial_send(0, &c, 1);
+		if (bt_status(1))
+			bt_send(&c, 1);
 	}
 }
 
