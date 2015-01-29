@@ -4,7 +4,7 @@ F_CPU   = 16000000
 CC = avr-gcc
 CFLAGS = -std=c99 -Wall -Os -mmcu=$(DEVICE) -DF_CPU=$(F_CPU)ULL -I.
 
-OBJ = main.o serial.o
+OBJ = main.o bt.o serial.o
 
 main.hex: main.elf
 	rm -f main.hex
