@@ -57,13 +57,13 @@ int main()
 	char c;
 
 	/* setup serial port */
-	serial_init(0, 38400ull);
+	serial_init();
 
 	sei();
 
 	while (1) {
-		serial_recv(0, &c, 1);
-		serial_send(0, &c, 1);
+		serial_recv(&c, 1);
+		serial_send(&c, 1);
 	}
 }
 
