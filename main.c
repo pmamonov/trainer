@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "serial.h"
+#include "bt.h"
 
 struct pcint_t {
 	uint8_t pcint;
@@ -21,6 +22,8 @@ struct pcint_t {
 #define TIMER_MAX	((1ull << 16) - 1)
 
 #define NUM_INT 3
+
+#define SERIAL_PC 0
 
 struct pcint_t pcint[NUM_INT] = {
 	{
@@ -56,14 +59,14 @@ int main()
 {
 	int i;
 	uint16_t delay;
-	uint8_t temp;
+	uint32_t temp;
 
 	/* setup timer1 */
 	TCCR1B |= 1 << CS10;
 	TIMSK1 |= 1 << TOIE1;
 
 	/* setup serial port */
-	serial_init();
+	serial_init(SERIAL_PC, 38400);
 
 	/* setup external interrupts */
 	for (i = 0; i < NUM_INT; i++) {
@@ -80,6 +83,9 @@ int main()
 
 	sei();
 
+	bt_init();
+	bt_connect();
+
 	while (1) {
 		for (i = 0; i < NUM_INT; i++) {
 			temp = 0;
@@ -92,13 +98,14 @@ int main()
 			sei();
 
 			if (temp) {
-				temp = 0xaa;
-				serial_send((char *)&temp, 1);
-				temp = i;
-				serial_send((char *)&temp, 1);
-				serial_send((char *)&delay, 2);
+				temp = 0xaa |
+				       ((0xff & i) << 8) |
+				       ((uint32_t)delay << 16);
+				serial_send(SERIAL_PC, (char *)&temp, 4);
+				bt_send((char *)&temp, 4);
 			}
 		}
+		bt_status(1);
 	}
 }
 
