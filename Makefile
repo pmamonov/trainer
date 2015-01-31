@@ -18,8 +18,16 @@ main.elf: $(OBJ)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+generator.elf: generator.c
+	$(CC) -Os -mmcu=atmega32 -DF_CPU=12000000ull -o $@ $<
+
+generator.hex: generator.elf
+	rm -f generator.hex
+	avr-objcopy -R .eeprom -O ihex generator.elf generator.hex
+	avr-size generator.elf
+
 clean:
-	rm -f $(OBJ) main.elf main.hex main.bin
+	rm -f $(OBJ) main.elf main.hex main.bin generator.elf generator.hex
 
 load:
 	avrdude -c usbasp -p m2560 -U flash:w:main.hex:i
@@ -33,3 +41,7 @@ load:
 
 disablebootloader:
 	avrdude -c usbasp -p m2560 -U hfuse:w:0xd9:m
+
+loadgen: generator.hex
+	avrdude -F -c usbasp -p m32 -U flash:w:generator.hex:i
+
