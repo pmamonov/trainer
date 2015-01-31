@@ -25,6 +25,8 @@ struct pcint_t {
 
 #define SERIAL_PC 0
 
+#define TIM_HZ 10000
+
 struct pcint_t pcint[NUM_INT] = {
 	{
 		.pcint = PCINT4,
@@ -113,7 +115,7 @@ ISR(TIMER1_OVF_vect)
 {
 	int i;
 
-	TCNT1 = (1ull << 16) - F_CPU / 1000;
+	TCNT1 = (1ull << 16) - F_CPU / TIM_HZ;
 	for (i = 0; i < NUM_INT; i++) {
 		if (pcint[i].timer < TIMER_MAX)
 			pcint[i].timer += 1;
