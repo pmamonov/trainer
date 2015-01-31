@@ -63,4 +63,5 @@ int bt_send(char *data, int len)
 ISR(BT_VECT)
 {
 	connected = 1;
+	_delay_ms(2000);
 }
