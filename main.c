@@ -11,8 +11,8 @@ struct pcint_t {
 	volatile uint8_t *pin;
 	volatile uint8_t *pcmsk;
 	uint8_t pnum;
-	uint16_t count;
-	uint16_t count_save;
+	uint16_t timer;
+	uint16_t delay;
 	uint8_t flags;
 };
 
@@ -25,10 +25,7 @@ struct pcint_t {
 
 #define SERIAL_PC 0
 
-#define TCNT1_CS 4
-#define TCNT1_HZ (F_CPU / 256)
-#define TIM_HZ 1
-
+#define TIM_HZ 10000
 
 struct pcint_t pcint[NUM_INT] = {
 	{
@@ -63,11 +60,11 @@ struct pcint_t pcint[NUM_INT] = {
 int main()
 {
 	int i;
-	uint16_t count;
+	uint16_t delay;
 	uint32_t temp;
 
 	/* setup timer1 */
-	TCCR1B |= TCNT1_CS << CS10;
+	TCCR1B |= 1 << CS10;
 	TIMSK1 |= 1 << TOIE1;
 
 	/* setup serial port */
@@ -80,7 +77,7 @@ int main()
 
 		PCICR |= (1 << pcint[i].pcie);
 		*pcint[i].pcmsk |= (1 << pcint[i].pcint);
-		pcint[i].count = 0;
+		pcint[i].timer = 0;
 		pcint[i].flags = 0;
 		if (*pcint[i].pin & (1 << pcint[i].pnum))
 			pcint[i].flags |= FLAG_BIT_SET;
@@ -98,14 +95,14 @@ int main()
 			if (pcint[i].flags & FLAG_INT) {
 				temp = 1;
 				pcint[i].flags &= ~FLAG_INT;
-				count = pcint[i].count_save;
+				delay = pcint[i].delay;
 			}
 			sei();
 
 			if (temp) {
 				temp = 0xaa |
 				       ((0xff & i) << 8) |
-				       ((uint32_t)count << 16);
+				       ((uint32_t)delay << 16);
 				serial_send(SERIAL_PC, (char *)&temp, 4);
 				bt_send((char *)&temp, 4);
 			}
@@ -118,11 +115,10 @@ ISR(TIMER1_OVF_vect)
 {
 	int i;
 
-	TCNT1 = (1ull << 16) - TCNT1_HZ / TIM_HZ;
+	TCNT1 = (1ull << 16) - F_CPU / TIM_HZ;
 	for (i = 0; i < NUM_INT; i++) {
-		pcint[i].count_save = pcint[i].count;
-		pcint[i].count = 0;
-		pcint[i].flags |= FLAG_INT;
+		if (pcint[i].timer < TIMER_MAX)
+			pcint[i].timer += 1;
 	}
 }
 
@@ -133,8 +129,10 @@ inline void pcint_isr()
 	for (i = 0; i < NUM_INT; i++) {
 		if (*pcint[i].pin & (1 << pcint[i].pnum)) {
 			if (!(pcint[i].flags & FLAG_BIT_SET)) {
+				pcint[i].flags |= FLAG_INT;
 				pcint[i].flags |= FLAG_BIT_SET;
-				pcint[i].count += 1;
+				pcint[i].delay = pcint[i].timer;
+				pcint[i].timer = 0;
 			}
 		} else
 			pcint[i].flags &= ~FLAG_BIT_SET;
