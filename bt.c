@@ -24,7 +24,6 @@ static volatile char connected = 0;
 
 void bt_init()
 {
-	serial_init(BT_SERIAL, 38400);
 	BT_STATUS_DDR &= ~(1 << BT_STATUS_BIT);
 	EIMSK |= 1 << BT_INT;
 	/* interrupt on rising edge */

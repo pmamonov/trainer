@@ -74,6 +74,7 @@ int main()
 
 	/* setup serial port */
 	serial_init(SERIAL_PC, 38400);
+	serial_init(BT_SERIAL, 38400);
 
 	/* setup external interrupts */
 	for (i = 0; i < NUM_INT; i++) {
