@@ -2,7 +2,13 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "serial.h"
-#include "bt.h"
+
+#ifdef BLUETOOTH
+	#warning "Bluetooth is enabled"
+	#include "bt.h"
+#else
+	#warning "Bluetooth is disabled"
+#endif
 
 volatile uint16_t timer = 0;
 
@@ -74,8 +80,10 @@ int main()
 
 	/* setup serial port */
 	serial_init(SERIAL_PC, 38400);
-	serial_init(BT_SERIAL, 38400);
 
+#ifdef BLUETOOTH
+	serial_init(BT_SERIAL, 38400);
+#endif
 	/* setup external interrupts */
 	for (i = 0; i < NUM_INT; i++) {
 		*pcint[i].ddr &= ~(1 << pcint[i].pnum);
@@ -91,8 +99,10 @@ int main()
 
 	sei();
 
+#ifdef BLUETOOTH
 	bt_init();
 	bt_connect();
+#endif
 
 	while (1) {
 		cli();
@@ -124,10 +134,14 @@ int main()
 				       ((0xff & i) << 8) |
 				       ((uint32_t)delay << 16);
 				serial_send(SERIAL_PC, (char *)&temp, 4);
+#ifdef BLUETOOTH
 				bt_send((char *)&temp, 4);
+#endif
 			}
 		}
+#ifdef BLUETOOTH
 		bt_status(1);
+#endif
 	}
 }
 
