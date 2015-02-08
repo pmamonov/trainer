@@ -1,6 +1,5 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "serial.h"
 
 #ifdef BLUETOOTH
@@ -9,8 +8,6 @@
 #else
 	#warning "Bluetooth is disabled"
 #endif
-
-volatile uint16_t timer = 0;
 
 struct pcint_t {
 	uint8_t pcint;
@@ -23,20 +20,18 @@ struct pcint_t {
 	uint16_t timer;
 	uint16_t delay;
 	uint8_t flags;
-	uint8_t count;
 };
 
 #define FLAG_INT	(1 << 0)
 #define FLAG_BIT_SET	(1 << 1)
 
-#define TIMER_MAX	(0x7fff)
+#define TIMER_MAX	((1ull << 16) - 1)
 
 #define NUM_INT 3
 
 #define SERIAL_PC 0
 
 #define TIM_HZ 10000
-#define MSR_HZ 10
 
 struct pcint_t pcint[NUM_INT] = {
 	{
@@ -71,7 +66,7 @@ struct pcint_t pcint[NUM_INT] = {
 int main()
 {
 	int i;
-	uint16_t delay, _timer;
+	uint16_t delay;
 	uint32_t temp;
 
 	/* setup timer1 */
@@ -105,27 +100,13 @@ int main()
 #endif
 
 	while (1) {
-		cli();
-		_timer = timer;
-		sei();
-		if (_timer) {
-			_delay_us(100);
-			continue;
-		} else {
-			cli();
-			timer = TIM_HZ / MSR_HZ;
-			sei();
-		}
-
 		for (i = 0; i < NUM_INT; i++) {
 			temp = 0;
 			cli();
 			if (pcint[i].flags & FLAG_INT) {
 				temp = 1;
 				pcint[i].flags &= ~FLAG_INT;
-				delay = pcint[i].delay / pcint[i].count;
-				pcint[i].count = 0;
-				pcint[i].delay = 0;
+				delay = pcint[i].delay;
 			}
 			sei();
 
@@ -154,9 +135,6 @@ ISR(TIMER1_OVF_vect)
 		if (pcint[i].timer < TIMER_MAX)
 			pcint[i].timer += 1;
 	}
-
-	if (timer)
-		timer -= 1;
 }
 
 inline void pcint_isr()
@@ -168,8 +146,7 @@ inline void pcint_isr()
 			if (!(pcint[i].flags & FLAG_BIT_SET)) {
 				pcint[i].flags |= FLAG_INT;
 				pcint[i].flags |= FLAG_BIT_SET;
-				pcint[i].count += 1;
-				pcint[i].delay += pcint[i].timer;
+				pcint[i].delay = pcint[i].timer;
 				pcint[i].timer = 0;
 			}
 		} else
